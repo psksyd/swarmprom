@@ -89,15 +89,8 @@ services:
           memory: 64M
       labels:
         - traefik.frontend.rule=Host:grafana.${DOMAIN}
-        - traefik.enable=true
         - traefik.port=3000
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik}
         - traefik.docker.network=traefik
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
 
   alertmanager:
     image: stefanprodan/swarmprom-alertmanager:v0.14.0
@@ -129,13 +122,7 @@ services:
         - traefik.frontend.rule=Host:alertmanager.${DOMAIN}
         - traefik.enable=true
         - traefik.port=9093
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik}
         - traefik.docker.network=traefik
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
         - traefik.frontend.auth.basic.users=${ADMIN_USER}:${HASHED_PASSWORD}
 
   unsee:
@@ -153,13 +140,7 @@ services:
         - traefik.frontend.rule=Host:unsee.${DOMAIN}
         - traefik.enable=true
         - traefik.port=8080
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik}
         - traefik.docker.network=traefik
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
         - traefik.frontend.auth.basic.users=${ADMIN_USER}:${HASHED_PASSWORD}
 
   node-exporter:
@@ -219,11 +200,5 @@ services:
         - traefik.frontend.rule=Host:prometheus.${DOMAIN}
         - traefik.enable=true
         - traefik.port=9090
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik}
         - traefik.docker.network=traefik
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
         - traefik.frontend.auth.basic.users=${ADMIN_USER}:${HASHED_PASSWORD}
